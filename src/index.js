@@ -12,6 +12,8 @@ const index_pars={
     warningtext: document.getElementById('warningtext'),
     
     guesslist: document.getElementById('guesslist'),
+
+    inputform: document.getElementById("inputform"),
     
     tadasound: new Audio("tada.mp3")
 }
@@ -19,13 +21,23 @@ const index_pars={
 index_pars.playbutton.addEventListener('click', playClick);
 index_pars.guessbutton.addEventListener('click', makeGuess);
 
+index_pars.tadasound.volume=0.1;
+
+index_pars.inputform.addEventListener("keydown", function(event) {
+  if (event.keyCode === 13) {
+   event.preventDefault();
+   makeGuess();
+  }
+});
+
+
 function playClick(){
     clearList();        
     animateRandomNumber(startGame);
 }
 
 function clearList(){
-    var child = index_pars.guesslist.lastElementChild    
+    var child = index_pars.guesslist.lastElementChild;    
     while (child) {
         index_pars.guesslist.removeChild(child);
         child = index_pars.guesslist.lastElementChild;
@@ -33,7 +45,7 @@ function clearList(){
 }
 
 function animateRandomNumber(runAfter){
-    index_pars.hiddentext.style.backgroundColor="white"
+    index_pars.hiddentext.style.backgroundColor="white";
     let myinterval = setInterval(function(){     
         index_pars.hiddentext.textContent = Math.floor(Math.random() * 9999)
     },100);
@@ -50,14 +62,14 @@ function startGame(){
 }
 
 function getVisibility( isVis ){
-    return isVis ? 'visible' : 'hidden'
+    return isVis ? 'visible' : 'hidden';
 }
 function setMode(isStarted){
-    index_pars.guesstext.style.visibility = getVisibility(isStarted)
-    index_pars.guessbutton.style.visibility = getVisibility(isStarted)
+    index_pars.guesstext.style.visibility = getVisibility(isStarted);
+    index_pars.guessbutton.style.visibility = getVisibility(isStarted);
     if(isStarted){
-        index_pars.guesstext.value=""
-        index_pars.guesstext.focus()
+        index_pars.guesstext.value="";
+        index_pars.guesstext.focus();
     }
 }
 
@@ -65,57 +77,54 @@ function setMode(isStarted){
 function getWarning(txt){
     return (txt.length!=4) ? "Guess should have 4 digits" :
     (!funcs.isValid(txt)) ? "Repeating digits not allowed" :        
-    ""
+    "";
 }
 
 function makeGuess(){
-    const txt = index_pars.guesstext.value
-    const warning= getWarning(txt)
-    index_pars.warningtext.textContent =warning
+    const txt = index_pars.guesstext.value;
+    const warning= getWarning(txt);
+    index_pars.warningtext.textContent =warning;
     if(warning==""){
-        let pm = funcs.getPlusMinus(txt,index_pars.target)
-        const isFound = (pm=="+ ".repeat(index_pars.digits))
-        showResult(txt, pm)
+        let pm = funcs.getPlusMinus(txt,index_pars.target);
+        const isFound = (pm=="+ ".repeat(index_pars.digits));
+        showResult(txt, pm);
         if(isFound){
             animateSuccess(finishSuccessfull);        
         }
     }else{
-        index_pars.guesstext.focus()
+        index_pars.guesstext.focus();
     }
-
 }
 
-
 function showResult(txt, pm){
-    const newItem = document.createElement("li")    
-    const tc = document.createTextNode(txt+" "+pm)
-    newItem.appendChild(tc)
-    index_pars.guesslist.insertBefore(newItem,null)
-    index_pars.guesstext.value=""
-    index_pars.guesstext.focus()
+    const newItem = document.createElement("li");    
+    const tc = document.createTextNode(txt+" "+pm);
+    newItem.appendChild(tc);
+    index_pars.guesslist.insertBefore(newItem,null);
+    index_pars.guesstext.value="";
+    index_pars.guesstext.focus();
 }
 
 
 
 function finishSuccessfull(){
-    index_pars.hiddentext.style.backgroundColor="green" 
-    setMode(false) 
+    index_pars.hiddentext.style.backgroundColor="green"; 
+    setMode(false); 
 }
 
 
 
 
-
 function animateSuccess(runAfter){
-    index_pars.tadasound.play()
-    let digs=0
+    index_pars.tadasound.play();
+    let digs=0;
     let myinterval = setInterval(function(){     
-        digs++
-        index_pars.hiddentext.textContent = index_pars.target.substring(0,digs)
+        digs++;
+        index_pars.hiddentext.textContent = index_pars.target.substring(0,digs);
     },200);
     setTimeout(function(){
-        clearInterval(myinterval)
-        runAfter()      
+        clearInterval(myinterval);
+        runAfter();      
     },900)
 }
 

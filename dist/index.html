@@ -14,9 +14,15 @@
         <button id="playbutton">New Game</button>
         <h2 id="hiddentext"></h2>
       </div>
-
-      <input type="number" id="guesstext" autocomplete="off" pattern="[0-9]+" />
-      <input type="button" value="Guess" id="guessbutton" />
+      <form id="inputform" action="">
+        <input
+          type="number"
+          id="guesstext"
+          autocomplete="off"
+          pattern="[0-9]+"
+        />
+        <input type="button" value="Guess" id="guessbutton" />
+      </form>
       <h2 id="warningtext"></h2>
       <ol id="guesslist"></ol>
     </div>
