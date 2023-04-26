@@ -1,5 +1,4 @@
 const functions = require('./functions');
-//import {funcions} from './functions.js';
 
 test('empty string should be valid', ()=>{    
     expect(functions.isValid('')).toBe(true)
