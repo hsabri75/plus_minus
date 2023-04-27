@@ -32,6 +32,11 @@ index_pars.inputform.addEventListener("keydown", function(event) {
 
 
 function playClick(){
+    console.log('cliscked play')
+    console.log({index_pars})
+    for(var b in window) { 
+        if(window.hasOwnProperty(b)) console.log(b); 
+      }
     clearList();        
     animateRandomNumber(startGame);
 }
@@ -129,4 +134,4 @@ function animateSuccess(runAfter){
 }
 
 
-
+module.exports = index_pars
